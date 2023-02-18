@@ -5,15 +5,17 @@ from loader import dp
 from states.ordering import OrderData
 
 def get_keyboard():
-    keyboard = types.ReplyKeyboardMarkup()
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     button = types.KeyboardButton("Share Position", request_location=True)
     keyboard.add(button)
     return keyboard
+
 
 @dp.message_handler(Command("location"), state=None)
 async def begin(message: types.Message):
     await message.answer("📍 send your location", reply_markup=get_keyboard())
     await OrderData.location.set()
+
 
 @dp.message_handler(content_types="location", state=OrderData.location)
 async def get_location(message: types.Message):

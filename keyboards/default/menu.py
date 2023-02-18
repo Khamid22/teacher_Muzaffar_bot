@@ -11,3 +11,4 @@ menu_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 btns_text = ("Vocabulary", "Dictionary", "About us")
 for text in btns_text:
   menu_keyboard.add(KeyboardButton(text))
+
