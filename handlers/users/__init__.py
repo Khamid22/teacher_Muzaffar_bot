@@ -1,3 +1,4 @@
+from . import orderHandler
 from . import AdminPanel
 from . import help
 from . import start

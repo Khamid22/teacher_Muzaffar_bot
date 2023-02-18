@@ -1,4 +1,4 @@
-[[source]]
+pip install geopy --user[[source]]
 url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 aiogram = "~=2.14"
 environs = "~=8.0.0"
+asyncpg = "*"
 
 [dev-packages]
 

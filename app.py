@@ -10,6 +10,7 @@ async def on_startup(dispatcher):
     await db.create()
     await db.drop_users()
     await db.create_table_users()
+
     await set_default_commands(dispatcher)
     await on_startup_notify(dispatcher)
 
