@@ -16,8 +16,6 @@ async def test():
     await db.add_user("John", "JohnDoe", 9)
     print("Added")
     users = await db.select_all_users()
-
-
-
+    helo
 
 asyncio.get_event_loop().run_until_complete(test())
