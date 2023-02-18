@@ -3,6 +3,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from loader import dp
 from states.ordering import OrderData
+from geopy.geocoders import Nominatim
 
 def get_keyboard():
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -21,6 +22,7 @@ async def begin(message: types.Message):
 async def get_location(message: types.Message):
     lat = message.location.latitude
     lon = message.location.longitude
-    reply = "latitude:  {}\nlongitude: {}".format(lat, lon)
+    geolocator = Nominatim(user_agent="timur2003qodirov@gmail.com");
+    location = geolocator.reverse(str(lat)+", " + str(lon))
 
-    await message.answer(reply)
+    await message.answer(location)
