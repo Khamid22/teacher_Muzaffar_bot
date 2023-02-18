@@ -18,4 +18,4 @@ async def bot_start(message: types.Message):
 
     count = await db.count_users()
     msg = f"{user[1]} has been added to the database.\nNumber of users: {count}."
-    await bot.send_message(chat_id=ADMINS[0], text=msg)
+    await message.answer(text=msg)
