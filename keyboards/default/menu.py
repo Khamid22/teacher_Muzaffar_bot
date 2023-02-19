@@ -18,3 +18,10 @@ def save_location():
   button = KeyboardButton("Share Position", request_location=True)
   keyboard.add(button)
   return keyboard
+
+
+def get_phonenum():
+  keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+  button = KeyboardButton("my contact", request_contact=True)
+  keyboard.add(button)
+  return keyboard

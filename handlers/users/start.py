@@ -17,7 +17,7 @@ async def bot_start(message: types.Message):
     )
   except asyncpg.exceptions.UniqueViolationError:
     user = await db.select_user(telegram_id=message.from_user.id)
-  await message.answer(f"Hi, {message.from_user.full_name}!", reply_markup=save_location())
+  await message.answer(f"Hi, {message.from_user.full_name}!, PLease share the destination", reply_markup=save_location())
   await OrderData.location.set()
 
   count = await db.count_users()
