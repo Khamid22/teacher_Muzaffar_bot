@@ -5,7 +5,7 @@ from loader import dp, db
 from states.ordering import OrderData
 from geopy.geocoders import Nominatim
 import re
-from keyboards.default.menu import get_phonenum
+from keyboards.default.menu import get_phonenumber
 
 
 # @dp.message_handler(Command("location"), state=None)
@@ -22,14 +22,13 @@ async def get_location(message: types.Message, state: FSMContext):
     geolocation = geolocator.reverse(str(lat)+", " + str(lon))
     # location =
     await message.answer(geolocation)
-    await message.answer("your phone number", reply_markup=get_phonenum())
+    await message.answer("your phone number", reply_markup=get_phonenumber())
     await OrderData.phone.set()
 
 
-@dp.message_handler(state=OrderData.phone)
+@dp.message_handler(content_types=['contact'], state=OrderData.phone)
 async def get_phone(message: types.Message, state: FSMContext):
-    contact = message.contact.phone_number
-    await message.answer(message.text)
+    await message.answer(message.contact.phone_number)
     await OrderData.categories.set()
 
 

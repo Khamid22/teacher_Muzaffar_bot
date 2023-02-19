@@ -20,7 +20,7 @@ def save_location():
   return keyboard
 
 
-def get_phonenum():
+def get_phonenumber():
   keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
   button = KeyboardButton("my contact", request_contact=True)
   keyboard.add(button)
