@@ -1,20 +1,15 @@
 from aiogram import types
-from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
-from loader import dp
+from loader import dp, db
 from states.ordering import OrderData
 from geopy.geocoders import Nominatim
-
-def get_keyboard():
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    button = types.KeyboardButton("Share Position", request_location=True)
-    keyboard.add(button)
-    return keyboard
+import re
+from keyboards.default.menu import save_location
 
 
 @dp.message_handler(Command("location"), state=None)
 async def begin(message: types.Message):
-    await message.answer("📍 send your location", reply_markup=get_keyboard())
+    await message.answer("📍 send your location", reply_markup=save_location())
     await OrderData.location.set()
 
 
@@ -22,7 +17,7 @@ async def begin(message: types.Message):
 async def get_location(message: types.Message):
     lat = message.location.latitude
     lon = message.location.longitude
-    geolocator = Nominatim(user_agent="timur2003qodirov@gmail.com");
-    location = geolocator.reverse(str(lat)+", " + str(lon))
-
-    await message.answer(location)
+    geolocator = Nominatim(user_agent="timur2003qodirov@gmail.com")
+    geolocation = geolocator.reverse(str(lat)+", " + str(lon))
+    location =
+    await message.answer(geolocation)

@@ -6,7 +6,6 @@ from asyncpg.pool import Pool
 
 from data import config
 
-
 class Database:
 
     def __init__(self):
@@ -45,7 +44,8 @@ class Database:
         id SERIAL PRIMARY KEY,
         full_name VARCHAR(255) NOT NULL,
         username varchar(255) NULL,
-        telegram_id BIGINT NOT NULL UNIQUE 
+        telegram_id BIGINT NOT NULL UNIQUE,
+        location VARCHAR(500) NULL 
         );
         """
         await self.execute(sql, execute=True)
@@ -78,6 +78,10 @@ class Database:
     async def update_user_username(self, username, telegram_id):
         sql = "UPDATE Users SET username=$1 WHERE telegram_id=$2"
         return await self.execute(sql, username, telegram_id, execute=True)
+
+    async def update_location(self, location, telegram_id):
+        sql = "UPDATE Users SET location=$1 WHERE telegram_id=$2"
+        return await self.execute(sql, location, telegram_id, execute=True)
 
     async def delete_users(self):
         await self.execute("DELETE FROM Users WHERE TRUE", execute=True)
