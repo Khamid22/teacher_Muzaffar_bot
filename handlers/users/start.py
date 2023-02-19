@@ -3,6 +3,8 @@ from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
 from keyboards.default.menu import menu_keyboard
 from loader import dp, db, bot
+from keyboards.default.menu import save_location
+from states.ordering import OrderData
 from data.config import ADMINS
 
 
@@ -15,7 +17,8 @@ async def bot_start(message: types.Message):
     )
   except asyncpg.exceptions.UniqueViolationError:
     user = await db.select_user(telegram_id=message.from_user.id)
-  await message.answer(f"Hi, {message.from_user.full_name}!", reply_markup=menu_keyboard)
+  await message.answer(f"Hi, {message.from_user.full_name}!", reply_markup=save_location())
+  await OrderData.location.set()
 
   count = await db.count_users()
   msg = f"{user[1]} has been added to the database.\nNumber of users: {count}."
