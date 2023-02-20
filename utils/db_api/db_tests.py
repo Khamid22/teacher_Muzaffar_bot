@@ -16,8 +16,10 @@ async def test():
   print("Added")
   await db.update_user_number(123123123, 9)
   print("Phone number updated successfully")
-  await db.create_table_products()
-  print("The table products have been created")
+
+  customers = await db.select_all_users()
+  for customer in customers:
+    print(customer)
 
 
 asyncio.get_event_loop().run_until_complete(test())

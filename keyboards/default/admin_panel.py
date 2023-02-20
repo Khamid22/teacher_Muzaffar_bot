@@ -10,3 +10,4 @@ products_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 options = ("Available Products", "Add new product")
 for option in options:
   products_keyboard.add(option)
+

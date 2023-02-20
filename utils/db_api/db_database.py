@@ -69,7 +69,10 @@ class Database:
 
   async def select_all_users(self):
     sql = "SELECT * FROM Users"
-    return await self.execute(sql, fetch=True)
+    async with self.pool.acquire() as conn:
+        async with conn.transaction():
+            results = await conn.fetch(sql)
+            return [dict(r) for r in results]
 
   async def select_user(self, **kwargs):
     sql = "SELECT * FROM Users WHERE "
