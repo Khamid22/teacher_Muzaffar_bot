@@ -1,10 +1,5 @@
 from aiogram.types.reply_keyboard import KeyboardButton, ReplyKeyboardMarkup
 
-# Admin menu keyboards
-admin_menu_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-admin_btns_text = ("Users", "Account")
-for text in admin_btns_text:
-  admin_menu_keyboard.add(KeyboardButton(text))
 
 # ordinary user
 menu_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
@@ -20,8 +15,6 @@ def save_location():
   return keyboard
 
 
-def get_phonenumber():
-  keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-  button = KeyboardButton("my contact", request_contact=True)
-  keyboard.add(button)
-  return keyboard
+phone_number = ReplyKeyboardMarkup(resize_keyboard=True)
+button = KeyboardButton("my contact", request_contact=True)
+phone_number.add(button)

@@ -4,8 +4,6 @@ from aiogram.dispatcher.filters import Command
 from loader import dp, db
 from states.ordering import OrderData
 from geopy.geocoders import Nominatim
-import re
-from keyboards.default.menu import get_phonenumber
 
 
 # @dp.message_handler(Command("location"), state=None)
@@ -24,12 +22,6 @@ async def get_location(message: types.Message, state: FSMContext):
     await message.answer(geolocation)
     await message.answer("your phone number", reply_markup=get_phonenumber())
     await OrderData.phone.set()
-
-
-@dp.message_handler(content_types=['contact'], state=OrderData.phone)
-async def get_phone(message: types.Message, state: FSMContext):
-    await message.answer(message.contact.phone_number)
-    await OrderData.categories.set()
 
 
 @dp.message_handler(state=OrderData.categories)

@@ -45,7 +45,8 @@ class Database:
         id SERIAL PRIMARY KEY,
         full_name VARCHAR(255) NOT NULL,
         username varchar(255) NULL,
-        telegram_id BIGINT NOT NULL UNIQUE
+        telegram_id BIGINT NOT NULL UNIQUE,
+        phone_number BIGINT NULL
         );
         """
     await self.execute(sql, execute=True)
@@ -61,6 +62,10 @@ class Database:
   async def add_user(self, full_name, username, telegram_id):
     sql = "INSERT INTO users (full_name, username, telegram_id) VALUES($1, $2, $3) returning *"
     return await self.execute(sql, full_name, username, telegram_id, fetchrow=True)
+
+  async def update_user_number(self, phone_number, telegram_id):
+    sql = "UPDATE Users SET phone_number=$1 WHERE telegram_id=$2"
+    return await self.execute(sql, phone_number, telegram_id, execute=True)
 
   async def select_all_users(self):
     sql = "SELECT * FROM Users"
@@ -89,23 +94,26 @@ class Database:
   async def drop_users(self):
     await self.execute("DROP TABLE Users", execute=True)
 
-  async def create_table_customer(self):
+  async def create_table_products(self):
     sql = """
-        CREATE TABLE IF NOT EXISTS produtcs(
+        CREATE TABLE IF NOT EXISTS products(
         id serial PRIMARY KEY,
         
         category_code VARCHAR(20) NOT NULL,
-        category_name VARCHAR(50) NOT NULL,
+        category_name VARCHAR(30) NOT NULL,
         
         subcategory_code VARCHAR(20) NOT NULL,
-        subcategory_name VARCHAR(20) NOT NULL,
+        subcategory_name VARCHAR(50) NOT NULL,
         
-        productName VARCHAR(50) NOT NULL,
-        
-        )
+        product_name VARCHAR(50) NOT NULL,
+        photo varchar(255) NULL,
+        price INT NOT NULL,
+        description VARCHAR(3000) NULL
+        );
     """
     await self.execute(sql, execute=True)
 
-  async def add_location(self, location):
-    sql = "INSERT INTO customer (location) VALUES $1 returning *"
-    return await self.execute(sql, location, fetchrow=True)
+  async def add_product(self, category_code, category_name, subcategory_code, subcategory_name, product_name, photo=None, price=None, description=""):
+    sql = "INSERT INTO Products (category_code, category_name, subcategory_code, subcategory_name, product_name, photo, price, description) VALUES($1, $2, $3, $4, $5, $6, $7, $8) returning *"
+    return await self.execute(sql, category_code, category_name, subcategory_code, subcategory_name, product_name,
+      photo, price, description, fetchrow=True)
