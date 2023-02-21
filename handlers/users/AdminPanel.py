@@ -34,7 +34,7 @@ async def show_all_customers(message: Message):
       name = customer.get("full_name")
       username = customer.get("username")
       phone_number = customer.get("phone_number")
-      customer_list += f"<b>Customer #{customer_number}</b>\n<b>Name: {name}</b>\n<b>Username: @{username} </b>\n " \
+      customer_list += f"<b>Customer #{customer_number}</b>\n<b> Name: {name}</b>\n<b> Username: @{username} </b>\n " \
                        f"<b>Phone: {phone_number}</b>\n\n "
 
     # Create the page turning buttons
