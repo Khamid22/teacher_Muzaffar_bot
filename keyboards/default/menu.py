@@ -9,11 +9,11 @@ def menu():
     menu_keyboard.add(KeyboardButton(text))
   return menu_keyboard
 
-def save_location():
-  keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-  button = KeyboardButton("Share Position", request_location=True)
-  keyboard.add(button)
-  return keyboard
+# def save_location():
+#   keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+#   button = KeyboardButton("Share Position", request_location=True)
+#   keyboard.add(button)
+#   return keyboard
 
 
 phone_number = ReplyKeyboardMarkup(resize_keyboard=True)

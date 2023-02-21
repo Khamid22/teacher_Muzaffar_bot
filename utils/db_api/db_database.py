@@ -91,7 +91,6 @@ class Database:
     sql = "UPDATE Users SET location=$1 WHERE telegram_id=$2"
     return await self.execute(sql, location, telegram_id, execute=True)
 
-
   async def delete_users(self):
     await self.execute("DELETE FROM Users WHERE TRUE", execute=True)
 
@@ -101,23 +100,28 @@ class Database:
   async def create_table_products(self):
     sql = """
         CREATE TABLE IF NOT EXISTS products(
-        id serial PRIMARY KEY,
-        
-        category_code VARCHAR(20) NOT NULL,
+        id SERIAL PRIMARY KEY,
         category_name VARCHAR(30) NOT NULL,
-        
-        subcategory_code VARCHAR(20) NOT NULL,
-        subcategory_name VARCHAR(50) NOT NULL,
-        
         product_name VARCHAR(50) NOT NULL,
-        photo varchar(255) NULL,
-        price INT NOT NULL,
-        description VARCHAR(3000) NULL
+        photo VARCHAR(200) NOT NULL,
+        price BIGINT NOT NULL
         );
     """
     await self.execute(sql, execute=True)
 
-  async def add_product(self, category_code, category_name, subcategory_code, subcategory_name, product_name, photo=None, price=None, description=""):
-    sql = "INSERT INTO Products (category_code, category_name, subcategory_code, subcategory_name, product_name, photo, price, description) VALUES($1, $2, $3, $4, $5, $6, $7, $8) returning *"
-    return await self.execute(sql, category_code, category_name, subcategory_code, subcategory_name, product_name,
-      photo, price, description, fetchrow=True)
+  async def add_product(self, category_name, product_name, photo, price=None):
+    sql = "INSERT INTO Products (category_name, product_name, photo, price) VALUES($1, $2, $3, $4) returning *"
+    return await self.execute(sql, category_name, product_name, photo, price, fetchrow=True)
+
+  async def drop_products(self):
+    await self.execute("DROP TABLE Products", execute=True)
+
+  async def delete_products(self):
+    await self.execute("DELETE FROM Products WHERE TRUE", execute=True)
+
+  async def select_all_products(self):
+    sql = "SELECT * FROM products"
+    async with self.pool.acquire() as conn:
+      async with conn.transaction():
+        results = await conn.fetch(sql)
+        return [dict(r) for r in results]

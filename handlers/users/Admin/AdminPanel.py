@@ -50,5 +50,3 @@ async def show_all_customers(message: Message):
     await message.answer(customer_list, reply_markup=keyboard)
 
 
-
-
