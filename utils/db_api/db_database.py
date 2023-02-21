@@ -46,7 +46,7 @@ class Database:
         full_name VARCHAR(255) NOT NULL,
         username varchar(255) NULL,
         telegram_id BIGINT NOT NULL UNIQUE,
-        phone_number BIGINT NULL
+        phone_number BIGINT NOT NULL
         );
         """
     await self.execute(sql, execute=True)
@@ -90,6 +90,7 @@ class Database:
   async def update_location(self, location, telegram_id):
     sql = "UPDATE Users SET location=$1 WHERE telegram_id=$2"
     return await self.execute(sql, location, telegram_id, execute=True)
+
 
   async def delete_users(self):
     await self.execute("DELETE FROM Users WHERE TRUE", execute=True)
