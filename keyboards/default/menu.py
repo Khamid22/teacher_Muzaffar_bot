@@ -2,11 +2,12 @@ from aiogram.types.reply_keyboard import KeyboardButton, ReplyKeyboardMarkup
 
 
 # ordinary user
-menu_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-btns_text = ("Vocabulary", "Dictionary", "About us")
-for text in btns_text:
-  menu_keyboard.add(KeyboardButton(text))
-
+def menu():
+  menu_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+  btns_text = ("Menu", "Settings", "About us")
+  for text in btns_text:
+    menu_keyboard.add(KeyboardButton(text))
+  return menu_keyboard
 
 def save_location():
   keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
