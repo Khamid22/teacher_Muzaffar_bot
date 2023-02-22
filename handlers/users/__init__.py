@@ -1,4 +1,3 @@
-from . import help
 from .Admin import AdminPanel
+from . import help, start
 from . import echo
-from .Customer import start

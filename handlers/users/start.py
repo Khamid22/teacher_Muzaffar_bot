@@ -19,7 +19,6 @@ async def bot_start(message: types.Message):
         user = await db.select_user(telegram_id=message.from_user.id)
     await message.answer(f"Hi,{message.from_user.full_name} !, please send your phone number",
                          reply_markup=phone_number)
-
     count = await db.count_users()
     msg = f"{user[1]} has been added to the database.\nNumber of users: {count}."
     await bot.send_message(chat_id=ADMINS[0], text=msg)

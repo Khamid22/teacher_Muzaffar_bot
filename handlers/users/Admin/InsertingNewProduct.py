@@ -1,8 +1,8 @@
-from handlers.users.Admin.AdminPanel import start_bot, modify_products
-from loader import bot, dp, db
+from handlers.users.Admin.AdminPanel import start_bot
+from loader import dp, db
 from aiogram import types
 from keyboards.inline.admin_panel import keyboard
-from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup
+from aiogram.types import Message, CallbackQuery
 from keyboards.default.admin_panel import back
 from aiogram.dispatcher import FSMContext
 from states.AdminState import NewProduct
@@ -90,5 +90,6 @@ async def process_callback_button(call: CallbackQuery, state: FSMContext):
 
 
 @dp.message_handler(text="back", state="*")
-async def back_main_menu(message: Message):
+async def back_main_menu(message: Message, state:FSMContext):
   await start_bot(message)
+  await state.finish()

@@ -8,3 +8,4 @@ class NewProduct(StatesGroup):
   waiting_for_category_name = State()
   waiting_for_subcategory_name = State()
   confirm = State()
+

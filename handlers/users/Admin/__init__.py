@@ -1,2 +1,3 @@
 from . import AdminPanel
-from . import ProductSection
+from . import InsertingNewProduct
+from . import AvailableProducts
