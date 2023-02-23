@@ -9,3 +9,5 @@ class NewProduct(StatesGroup):
   waiting_for_subcategory_name = State()
   confirm = State()
 
+class OldProducts(StatesGroup):
+  all_products = State()

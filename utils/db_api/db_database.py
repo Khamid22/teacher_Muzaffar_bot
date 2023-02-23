@@ -70,9 +70,9 @@ class Database:
   async def select_all_users(self):
     sql = "SELECT * FROM Users"
     async with self.pool.acquire() as conn:
-        async with conn.transaction():
-            results = await conn.fetch(sql)
-            return [dict(r) for r in results]
+      async with conn.transaction():
+        results = await conn.fetch(sql)
+        return [dict(r) for r in results]
 
   async def select_user(self, **kwargs):
     sql = "SELECT * FROM Users WHERE "
@@ -113,15 +113,29 @@ class Database:
     sql = "INSERT INTO Products (category_name, product_name, photo, price) VALUES($1, $2, $3, $4) returning *"
     return await self.execute(sql, category_name, product_name, photo, price, fetchrow=True)
 
-  async def drop_products(self):
-    await self.execute("DROP TABLE Products", execute=True)
-
-  async def delete_products(self):
-    await self.execute("DELETE FROM Products WHERE TRUE", execute=True)
-
   async def select_all_products(self):
     sql = "SELECT * FROM products"
     async with self.pool.acquire() as conn:
       async with conn.transaction():
         results = await conn.fetch(sql)
         return [dict(r) for r in results]
+
+  async def get_categories(self):
+    sql = "SELECT DISTINCT category_name FROM Products"
+    categories = await self.execute(sql, fetch=True)
+    return [category['category_name'] for category in categories]
+
+  async def get_products(self, category_name):
+    sql = f"SELECT * FROM products WHERE category_name='{category_name}'"
+    async with self.pool.acquire() as conn:
+      async with conn.transaction():
+        results = await conn.fetch(sql)
+        return [dict(r) for r in results]
+
+  async def drop_products(self):
+    await self.execute("DROP TABLE Products", execute=True)
+
+  async def delete_products(self):
+    await self.execute("DELETE FROM Products WHERE TRUE", execute=True)
+
+
