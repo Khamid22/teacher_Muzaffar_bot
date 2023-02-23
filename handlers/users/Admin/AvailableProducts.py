@@ -19,4 +19,5 @@ async def list_products(message: Message):
     photo = product.get("photo")
     text = f"Name: {product.get('product_name')}\n"
     text += f"Price: {product.get('price')} сум"
-    await message.answer_photo(photo,text, reply_markup=modify_keyboard)
+    await message.answer_photo(photo, text, reply_markup=modify_keyboard)
+
